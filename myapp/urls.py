@@ -10,6 +10,7 @@ urlpatterns = patterns('',
     url(r'^app$', 'myapp.tako.MainPage'),
     url(r'^app_cmd$', 'myapp.tako.process_command'),
     url(r'^app_getdata$', 'myapp.getdatalist.getdata'),
+    url(r'^app_getdata_p$', 'myapp.getdatalist.getdata_p'),
     # url(r'^myapp/', include('myapp.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
