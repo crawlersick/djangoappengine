@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Sick Tako - Network Resource prpr</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="sss/bootstrap/css/bootstrap.min.css">
+  <script src="sss/jquery.min.js"></script>
+  <script src="sss/bootstrap/js/bootstrap.min.js"></script>
+	<script>
+$(function()
+{
+    $("#target-web").focus();
+    $("#target-web").keypress(keysubmit);
+    $("#target-exp").keypress(keysubmit);
+    var jsonstr='[{"cmd_action": "test", "cmd_target": "http://share.popgo.org/", "author": "233_233_null", "remark": "", "expre": "(?<=<td class=\\"inde_tab_hot\\"><a href=\\").*?(?=&)"},{"cmd_action": "test", "cmd_target": "http://share.popgo.org/", "author": "233_233_null", "remark": "", "expre": "(?<=<td class=\\"inde_tab_hot\\"><a href=\\").*?(?=&)"}, {"cmd_action": "test", "cmd_target": "http://share.popgo.org/", "author": "", "remark": "", "expre": "(?<=<td class=\\"inde_tab_hot\\"><a href=\\").*?(?=&)"}, {"cmd_action": "test", "cmd_target": "http://share.popgo.org/", "author": "233_233_null", "remark": "", "expre": "(?<=<td class=\\"inde_[a-z]_hot\\"><a href=\\").*?(?=&)"},{"cmd_action": "test", "cmd_target": "http://share.popgo.org/", "author": "233_233_null", "remark": "", "expre": "(?<=<td class=\\"inde_tab_hot\\"><a href=\\").*?(?=&)"}]';
+    var jsonobj=jQuery.parseJSON(jsonstr);
+    setdivcon("lv1div",jsonobj);
+})
+
+function setdivcon(sldivid,datatofill)
+{
+    $('#'+sldivid).text('');
+    $.each(datatofill, function(i, obj) {
+        if (i%2==0)
+        {
+        bgcl='"background-color:lavender;">';    
+        }
+        else
+        {
+        bgcl='"background-color:lavenderblush;">';
+        }
+        hddiv='<div class="col-sm-4" style=';
+        eddiv='</div>';
+        $('#'+sldivid).prepend(hddiv+bgcl+obj["expre"].replace(new RegExp('&lt;(/)?b\\s*&gt;', 'gi'), '<$1b>')+eddiv);
+    });
+}
+
+		function keysubmit(e)
+		{
+			if(e.which == 13)
+			{
+				//alert(encodeURIComponent($("#target-web").val()));
+				$.ajax( '/app_cmd',
+						{
+							cache: false,
+							type: 'GET',
+							data: 
+							{
+								cmd:$("#target-web").val(),
+								exp:$("#target-exp").val()
+							},
+								dataType: 'json',
+								success: function(resp)
+							{
+								alert(resp[0]);
+							},
+							error: function(error) 
+							{
+								alert( 'something went wrong', error);
+							}
+						}
+					);
+			}
+		}
+
+	</script>
+</head>
+<body>
+
+<div class="container">
+  <h2>XXXXXXXXXXX</h2>
+  <p>XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX:</p>
+        <div class="form-group">
+            <label for="target-web">CMD:</label>
+            <input type="text" class="form-control" id="target-web">
+        </div>
+        <div class="form-group">
+            <label for="target-exp">EXP:</label>
+            <input type="text" class="form-control" id="target-exp">
+        </div>
+	<div class="container-fluid">
+	  <h1>XXXXXXXX</h1>
+	  <p>XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.</p>
+	  <div id="lv1div" class="row">
+	    <div class="col-sm-4" style="background-color:lavender;">.col-sm-4</div>
+	    <div class="col-sm-4" style="background-color:lavenderblush;">.col-sm-4</div>
+	    <div class="col-sm-4" style="background-color:lavender;">.col-sm-4</div>
+	  </div>
+	</div>
+</div>
+
+</body>
+</html>
