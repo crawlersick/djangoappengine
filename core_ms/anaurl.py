@@ -2,6 +2,7 @@ import urllib2
 from StringIO import StringIO
 import gzip
 import re
+import logging
 def ana(urlstr,expstr):
     print "this is ana moudle start",urlstr,expstr
     try:
@@ -23,11 +24,18 @@ def ana(urlstr,expstr):
         else:
             data=resp.read()
         #print data
-        matlist=re.findall(expstr,data)
+        try:
+            logging.info('start re')
+            matlist=re.findall(expstr,data)
+        except:
+            logging.info('exception when findall')
+            matlist=['sick_tako_reply_code_000_0_003','regex exception,illigle regex!']
+    #except urllib2.URLError, e:
+        #handleError(e)
+    except:
+        matlist=['sick_tako_reply_code_000_0_004','url error!']
+    finally:
         return matlist
-
-    except urllib2.URLError, e:
-        handleError(e)
 
 #resu=ana("http://share.popgo.org",'(?<=<td class="inde_tab_hot"><a href=").*?(?=&)')
 #print resu
