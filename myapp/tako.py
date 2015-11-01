@@ -12,8 +12,14 @@ def process_command(request):
     logging.info("process_command started")
     cmdstr=request.GET.get('cmd')
     expstr=request.GET.get('exp')
+    cksstr=request.GET.get('cks')
+    poststr=request.GET.get('poststr')
     logging.info(cmdstr)
     logging.info(expstr)
+    if cksstr is not None:
+        logging.info('getcks '+cksstr)
+    if poststr is not None:
+        logging.info('getpostdata'+poststr)
     if (cmdstr is None) or (expstr is None):
         resplist=['sick_tako_reply_code_000_0_000','no input for exp and cmd']
     else:
@@ -26,7 +32,7 @@ def process_command(request):
             hobj=histobj(cmd_action=cmdlist[0],cmd_target=cmdlist[1],expre=expre,author='233_233_null')
             hobj.save()
             if cmdlist[0]=='test':
-                resplist=anaurl.ana(cmdlist[1],expre)
+                resplist=anaurl.ana(cmdlist[1],expre,cksstr,poststr)
             else:
                 resplist=['sick_tako_reply_code_000_0_002','cmdlist first element can not recognized']
         else:

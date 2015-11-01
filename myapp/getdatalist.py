@@ -23,6 +23,7 @@ def getdata(request):
 #this is config to be called by /app_getdata_p?reqobj=histobj&p=1
 def getdata_p(request):
     logging.info("getdata_pstart!!")
+    logging.info(request.COOKIES)
     reqobj=request.GET.get('reqobj')
     pagenum=request.GET.get('p')
     resplist=[]

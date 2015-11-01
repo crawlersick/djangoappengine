@@ -48,7 +48,8 @@ function setdivcon(sldivid,datatofill)
 							data: 
 							{
 								cmd:$("#target-web").val(),
-								exp:$("#target-exp").val()
+								exp:$("#target-exp").val(),
+                                                                cks:$("#target-cks").val(),
 							},
 								dataType: 'json',
 								success: function(resp)
@@ -78,6 +79,10 @@ function setdivcon(sldivid,datatofill)
         <div class="form-group">
             <label for="target-exp">EXP:</label>
             <input type="text" class="form-control" id="target-exp">
+        </div>
+        <div class="form-group">
+            <label for="target-cks">COOKIES:</label>
+            <input type="text" class="form-control" id="target-cks">
         </div>
 	<div class="container-fluid">
 	  <h1>XXXXXXXX</h1>
