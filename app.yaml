@@ -29,9 +29,13 @@ handlers:
   static_dir: static/sss
 
 
-- url: /.*
+- url: /app.*
   script: djangoappengine.main.application
 
 - url: /.*
   static_files: static/s/404.html
   upload: static/s/404.html
+
+skip_files:
+- ^(.*/)?\.db$
+- ^\.git.*

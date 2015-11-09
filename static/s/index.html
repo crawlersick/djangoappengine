@@ -7,15 +7,45 @@
   <link rel="stylesheet" href="sss/bootstrap/css/bootstrap.min.css">
   <script src="sss/jquery.min.js"></script>
   <script src="sss/bootstrap/js/bootstrap.min.js"></script>
+  <script src="sss/underscore-min.js"></script>
 	<script>
 $(function()
 {
     $("#target-web").focus();
     $("#target-web").keypress(keysubmit);
     $("#target-exp").keypress(keysubmit);
-    var jsonstr='[{"cmd_action": "test", "cmd_target": "http://share.popgo.org/", "author": "233_233_null", "remark": "", "expre": "(?<=<td class=\\"inde_tab_hot\\"><a href=\\").*?(?=&)"},{"cmd_action": "test", "cmd_target": "http://share.popgo.org/", "author": "233_233_null", "remark": "", "expre": "(?<=<td class=\\"inde_tab_hot\\"><a href=\\").*?(?=&)"}, {"cmd_action": "test", "cmd_target": "http://share.popgo.org/", "author": "", "remark": "", "expre": "(?<=<td class=\\"inde_tab_hot\\"><a href=\\").*?(?=&)"}, {"cmd_action": "test", "cmd_target": "http://share.popgo.org/", "author": "233_233_null", "remark": "", "expre": "(?<=<td class=\\"inde_[a-z]_hot\\"><a href=\\").*?(?=&)"},{"cmd_action": "test", "cmd_target": "http://share.popgo.org/", "author": "233_233_null", "remark": "", "expre": "(?<=<td class=\\"inde_tab_hot\\"><a href=\\").*?(?=&)"}]';
-    var jsonobj=jQuery.parseJSON(jsonstr);
-    setdivcon("lv1div",jsonobj);
+    //var jsonstr='[{"cmd_action": "test", "cmd_target": "http://share.popgo.org/", "author": "233_233_null", "remark": "", "expre": "(?<=<td class=\\"inde_tab_hot\\"><a href=\\").*?(?=&)"},{"cmd_action": "test", "cmd_target": "http://share.popgo.org/", "author": "233_233_null", "remark": "", "expre": "(?<=<td class=\\"inde_tab_hot\\"><a href=\\").*?(?=&)"}, {"cmd_action": "test", "cmd_target": "http://share.popgo.org/", "author": "", "remark": "", "expre": "(?<=<td class=\\"inde_tab_hot\\"><a href=\\").*?(?=&)"}, {"cmd_action": "test", "cmd_target": "http://share.popgo.org/", "author": "233_233_null", "remark": "", "expre": "(?<=<td class=\\"inde_[a-z]_hot\\"><a href=\\").*?(?=&)"},{"cmd_action": "test", "cmd_target": "http://share.popgo.org/", "author": "233_233_null", "remark": "", "expre": "(?<=<td class=\\"inde_tab_hot\\"><a href=\\").*?(?=&)"}]';
+    //var jsonobj=jQuery.parseJSON(jsonstr);
+    //setdivcon("lv1div",jsonobj);
+    $.ajax(
+            '/app_getdata_p?reqobj=histobj&p=1',
+            {
+                cache: false,
+                type: "get",
+                data:{
+                    reqobj:"histobj",
+                    p:"1"
+                    },
+                dataType: 'json', 
+                success: function(resp){
+                                       //alert('get resp from histobj'+resp[0]); 
+                                       _.templateSettings.variable = "listitem";
+                                       var template = _.template(
+                                            $( "script.template" ).html()
+                                            );
+                                       $("#lv1div").append(
+                                                   template(resp)
+                                                           );
+                                        },
+                error: function(e){
+                                    alert('get histobj error heppen',e);
+                                    }                 
+            
+            
+            }
+    
+            );
+
 })
 
 function setdivcon(sldivid,datatofill)
@@ -32,7 +62,7 @@ function setdivcon(sldivid,datatofill)
         }
         hddiv='<div class="col-sm-4" style=';
         eddiv='</div>';
-        $('#'+sldivid).prepend(hddiv+bgcl+obj["expre"].replace(new RegExp('&lt;(/)?b\\s*&gt;', 'gi'), '<$1b>')+eddiv);
+        $('#'+sldivid).prepend(hddiv+bgcl+obj["cmd_target"].replace(new RegExp('&lt;(/)?b\\s*&gt;', 'gi'), '<$1b>')+eddiv);
     });
 }
 
@@ -49,7 +79,7 @@ function setdivcon(sldivid,datatofill)
 							{
 								cmd:$("#target-web").val(),
 								exp:$("#target-exp").val(),
-                                                                cks:$("#target-cks").val(),
+                                                                cks:$("#target-cks").val()
 							},
 								dataType: 'json',
 								success: function(resp)
@@ -88,12 +118,27 @@ function setdivcon(sldivid,datatofill)
 	  <h1>XXXXXXXX</h1>
 	  <p>XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.</p>
 	  <div id="lv1div" class="row">
+          <!--
 	    <div class="col-sm-4" style="background-color:lavender;">.col-sm-4</div>
 	    <div class="col-sm-4" style="background-color:lavenderblush;">.col-sm-4</div>
 	    <div class="col-sm-4" style="background-color:lavender;">.col-sm-4</div>
+            -->
 	  </div>
 	</div>
 </div>
+
+
+
+<script type="text/template" class="template">
+    <div id="tempdiv" class="row">
+        <% _.each(listitem,function(item,i){ %>
+        <% if(i%2==0){stylestr="background-color:lavender;"}else{stylestr="background-color:lavenderblush;"} %> 
+            <div class="col-sm-4" style=<%- stylestr  %>>
+            <%- item["cmd_target"]  %>
+            </div>
+        <% }) %>
+    </div>
+</script>
 
 </body>
 </html>
