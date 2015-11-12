@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import urllib2
 from StringIO import StringIO
 import gzip
@@ -5,7 +6,7 @@ import re
 import logging
 import urlparse
 def ana(urlstr,expstr,cks=None,postdata=None):
-    print "this is ana moudle start",urlstr,expstr
+    #print "this is ana moudle start",urlstr,expstr
     matlist=['init','init']
     print "1"
     headers = {  

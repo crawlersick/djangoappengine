@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.http import HttpResponse, HttpResponseNotFound
 import json
 import logging
@@ -33,7 +34,7 @@ def getdata_p(request):
         resplist=['sick_tako_reply_code_000_0_010','no input for reqobj']
     else:
         genobj=getattr(sys.modules[__name__],reqobj)
-        tempresplist=list(genobj.objects.all())
+        tempresplist=list(genobj.objects.order_by('-date').all())
         paginator = Paginator(tempresplist,5)
         try:
             presult=paginator.page(pagenum)
