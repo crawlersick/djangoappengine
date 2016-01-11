@@ -84,7 +84,9 @@ function setdivcon(sldivid,datatofill)
 								dataType: 'json',
 								success: function(resp)
 							{
-								alert(resp[0]);
+								//alert(resp[0]);
+                         $('#fbdiv1').html(resp)
+                         $('#myModal').modal('show')
 							},
 							error: function(error) 
 							{
@@ -125,6 +127,28 @@ function setdivcon(sldivid,datatofill)
             -->
 	  </div>
 	</div>
+
+<!-- Modal -->
+<div id="myModal"class="modal fade"role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <buttontype="button" class="close"data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Modal Header</h4>
+      </div>
+      <div class="modal-body" id="fbdiv1">
+        <p>Some text in the modal.</p>
+      </div>
+      <div class="modal-footer">
+        <buttontype="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
 </div>
 
 

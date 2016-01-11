@@ -1,3 +1,4 @@
+#!/bin/python2.7
 # -*- coding: utf-8 -*-
 import urllib2
 from StringIO import StringIO
@@ -64,5 +65,8 @@ def ana(urlstr,expstr,cks=None,postdata=None):
     finally:
         return matlist
 
-#resu=ana("http://share.popgo.org",'(?<=<td class="inde_tab_hot"><a href=").*?(?=&)')
-#print resu
+if __name__=='__main__':
+    #resu=ana("http://share.popgo.org",'(?<=<td class="inde_tab_hot"><a href=").*?(?=&)')
+    resu=ana("https://kat.cr/usearch/big%20bang/",'(?<=<td class="inde_tab_hot"><a href=").*?(?=&)')
+    print resu
+
